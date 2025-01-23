@@ -36,6 +36,6 @@ Endpoints:
 
 Your task is to deliver a complete solution for deploying this application in a production environment. Testing environments are not required. Specifically, you need to provide:
 1. A pipeline to build and push the Docker image.
-2. Terraform code to provision all necessary cloud resources (e.g., VPC, Kubernetes cluster) for a cloud provider, preferably GCP.
+2. Terraform code to provision all necessary cloud resources (e.g., VPC, Kubernetes cluster) for GCP.
 3. Helm chart or deployment scripts for deploying Kubernetes-related components.
 4. Automation for deployment (GitOps approach preferred).
