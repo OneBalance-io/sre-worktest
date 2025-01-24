@@ -16,7 +16,6 @@ Endpoints:
 
     GET /:
         A test endpoint to verify the Redis connection.
-        Writes a sample key-value pair ("test_key": "Hello Redis!") to the Redis database, retrieves it, and returns the value as a response.
 
     POST /write:
         Adds a new key-value pair to the Redis database.

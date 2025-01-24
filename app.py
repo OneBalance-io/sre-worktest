@@ -19,18 +19,16 @@ redis_client = redis.StrictRedis(
     decode_responses=True
 )
 
-# Helper function to generate random strings
 def random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 @app.route("/")
 def index():
     try:
-        redis_client.set("test_key", "Hello Redis!")
-        value = redis_client.get("test_key")
-        return f"Value from Redis: {value}"
+        redis_client.ping()
+        return "Redis connection is healthy!"
     except redis.ConnectionError:
-        return "Could not connect to Redis!"
+        return "Could not connect to Redis!", 500
 
 # Endpoint to write a key-value pair to Redis (random or user-provided)
 @app.route('/write', methods=['POST'])
@@ -38,19 +36,16 @@ def write_to_redis():
     data = request.get_json()
 
     if data:
-        # If key-value pair is provided in the request body
         key = data.get('key')
         value = data.get('value')
         if not key or not value:
             return jsonify({'error': 'Both "key" and "value" are required'}), 400
     else:
-        # Generate random key-value pair if no data is provided
         key = random_string()
         value = random_string()
 
-    redis_client.set(key, value)  # No TTL
+    redis_client.set(key, value)
     return jsonify({'message': 'Key-Value pair added', 'key': key, 'value': value})
-
 
 # Endpoint to delete a key-value pair from Redis
 @app.route('/delete', methods=['DELETE'])
